@@ -59,7 +59,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     
     # users
-    'accounts',
+    'users',
 ]
 
 CORS_ORIGIN_WHITELIST = (
