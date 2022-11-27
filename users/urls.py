@@ -8,5 +8,8 @@ app_name = 'users'
 urlpatterns = [
     path('', include('dj_rest_auth.urls')),
     path('registration/', include('dj_rest_auth.registration.urls')),
-    path('google/', views.GoogleLogin.as_view(), name='google_login')
+    path('google/', views.GoogleLogin.as_view(), name='google_login'),
+    
+    path('add/', views.createProfile, name='create_profile'),
+    path('details/<userName>', views.details, name='user_details')
 ]
