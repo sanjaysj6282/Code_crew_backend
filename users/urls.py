@@ -11,5 +11,6 @@ urlpatterns = [
     path('google/', views.GoogleLogin.as_view(), name='google_login'),
     
     path('add/', views.createProfile, name='create_profile'),
+    # path('check/', views.sample_view, name='sample'),
     path('details/<userName>', views.details, name='user_details')
 ]

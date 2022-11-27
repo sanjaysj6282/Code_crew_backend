@@ -2,7 +2,15 @@ from django.contrib import admin
 
 from .models import userDetails
 
-admin.site.register(userDetails)
+# admin.site.register(userDetails)
+
+class ClientDetailsAdmin(admin.ModelAdmin):
+    def get_changeform_initial_data(self, request):
+        get_data = super(ClientDetailsAdmin, self).get_changeform_initial_data(request)
+        get_data['created_by'] = request.user.pk
+        return get_data
+
+admin.site.register(userDetails, ClientDetailsAdmin)
 
 # from django.contrib import admin
 # from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
