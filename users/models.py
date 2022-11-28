@@ -1,8 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
-from django.contrib import admin
-
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 class userDetails(models.Model):
     class Programme_choices(models.TextChoices):
         BTECH      = 'BT', _('BTech')
@@ -34,8 +34,11 @@ class userDetails(models.Model):
     def __str__(self):
         return self.user.first_name
 
-class userDetailsAdmin(admin.ModelAdmin):
-    fields = ('user', 'phone_no', 'programme', 'course', 'gender', 'category', 'income',)
-    def save_model(self, request, obj, form, change):
-        obj.user = request.user
-        obj.save()
+# @receiver(post_save, sender=User)
+# def create_user_profile(sender, instance, created, **kwargs):
+#     if created:
+#         userDetails.objects.create(user=instance)
+
+# @receiver(post_save, sender=User)
+# def save_user_profile(sender, instance, **kwargs):
+#     instance.profile.save()

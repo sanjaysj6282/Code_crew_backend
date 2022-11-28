@@ -32,7 +32,7 @@ def createProfile(request):
     
     # data=request.data
     # curr_user=User.objects.get(id=data['id'])
-    serializer = userdetailSerializer(data=request.data)
+    serializer = userdetailSerializer(data=request.data, context={'request': request})
     if serializer.is_valid(raise_exception=ValueError):
         serializer.save(
             user_id=curr_user.id
