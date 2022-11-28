@@ -10,14 +10,16 @@ class UserSerializer(serializers.ModelSerializer):
             
 class userdetailSerializer(serializers.ModelSerializer):
     # user = User.objects.get(pk=2)
-    user = serializers.PrimaryKeyRelatedField(
-        read_only=True, default=serializers.CurrentUserDefault()
-    )
-    # user = serializers.HiddenField(default=serializers.CurrentUserDefault())
-    # id=serializers.HiddenField(default=serializers.CurrentUserDefault())
+    # user = serializers.PrimaryKeyRelatedField(
+    #     read_only=True, default=serializers.CurrentUserDefault()
+    # )
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
     # user=serializers
     # user = User.objects.all().get('pk')
     # user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=False)
+    # user = UserSerializer(required=False)
+    # user = serializers.CurrentUserDefault()
+    # user = serializers.PrimaryKeyRelatedField(read_only=True, default=serializers.CurrentUserDefault())
     class Meta:
         model = userDetails
         # user = UserSerializer(required=True)
@@ -27,8 +29,7 @@ class userdetailSerializer(serializers.ModelSerializer):
     # def create(self, validated_data):
     #     user_data = validated_data.pop('user')
     #     user = UserSerializer.create(UserSerializer(), validated_data=user_data)
-    #     profile, created = userDetails.objects.update_or_create(user=user,
-    #                         subject_major=validated_data.pop('subject_major'))
+    #     profile, created = userDetails.objects.update_or_create(user=user)
     #     return profile
     
     # class Meta:

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
+from django.contrib import admin
 
 class userDetails(models.Model):
     class Programme_choices(models.TextChoices):
@@ -32,4 +33,9 @@ class userDetails(models.Model):
 
     def __str__(self):
         return self.user.first_name
-            
+
+class userDetailsAdmin(admin.ModelAdmin):
+    fields = ('user', 'phone_no', 'programme', 'course', 'gender', 'category', 'income',)
+    def save_model(self, request, obj, form, change):
+        obj.user = request.user
+        obj.save()

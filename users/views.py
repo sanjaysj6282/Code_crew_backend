@@ -10,6 +10,8 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User
+
 
 # if you want to use Authorization Code Grant, use this
 class GoogleLogin(SocialLoginView):
@@ -18,14 +20,24 @@ class GoogleLogin(SocialLoginView):
     client_class = OAuth2Client
 
 
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def createProfile(request):
+    # curr_user = None
+    # request = self.context.get("request")
+    # if request and hasattr(request, "user"):
+    #     curr_user = request.user
     curr_user=request.user
+    
+    # data=request.data
+    # curr_user=User.objects.get(id=data['id'])
     serializer = userdetailSerializer(data=request.data)
     if serializer.is_valid(raise_exception=ValueError):
         serializer.save(
-            id=curr_user.id
+            user_id=curr_user.id
+            # user=curr_user
+            # user=User.
         )
         # serializer.create(validated_data=request.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
