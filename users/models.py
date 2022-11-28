@@ -30,6 +30,7 @@ class userDetails(models.Model):
     avatar   = models.ImageField(upload_to='avatar', blank=True)
     category = models.CharField(max_length=3, choices=Category_choices.choices)
     income   = models.IntegerField()
+    #  add a field to add pk so thar it can be refereced
 
     def __str__(self):
         return self.user.first_name

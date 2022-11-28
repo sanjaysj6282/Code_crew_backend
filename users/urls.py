@@ -12,5 +12,5 @@ urlpatterns = [
     
     path('add/', views.createProfile, name='create_profile'),
     # path('check/', views.sample_view, name='sample'),
-    path('details/<userName>', views.details, name='user_details')
+    path('details/', views.details, name='user_details')
 ]

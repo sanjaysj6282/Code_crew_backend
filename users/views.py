@@ -11,6 +11,9 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
+from rest_framework import serializers
+from django.shortcuts import get_object_or_404
+from . import models
 
 
 # if you want to use Authorization Code Grant, use this
@@ -23,6 +26,8 @@ class GoogleLogin(SocialLoginView):
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
+# error solved
+# https://stackoverflow.com/questions/27934822/get-current-user-in-model-serializer
 def createProfile(request):
     # curr_user = None
     # request = self.context.get("request")
@@ -50,7 +55,12 @@ def createProfile(request):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def details(request, userName):
-    user_details = userDetails.objects.get(id=userName)
-    serialized_data = userdetailSerializer(user_details)
+def details(request):
+    # curr_user=request.user
+    # user_details = userDetails.objects.get(id=curr_user.id)
+    # curr_user=get_object_or_404(userDetails, user__user__username=username)
+    # user_details = User.objects.all().select_related('userDetails')
+    curr_user=request.user
+    user_details=userDetails.objects.get(user=curr_user)
+    serialized_data = userdetailSerializer(user_details, context={'request': request})
     return Response(serialized_data.data)
