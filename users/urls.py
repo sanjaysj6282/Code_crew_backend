@@ -10,7 +10,11 @@ urlpatterns = [
     path('registration/', include('dj_rest_auth.registration.urls')),
     path('google/', views.GoogleLogin.as_view(), name='google_login'),
     
+    
+    path('list/', views.listDetails,name='list users'),
+    
     path('add/', views.createProfile, name='create_profile'),
-    # path('check/', views.sample_view, name='sample'),
-    path('details/', views.details, name='user_details')
+    path('details/', views.details, name='user_details'),
+    path('updateDetails/', views.updateDetails, name='update_details'),
+    path('deleteDetails/', views.deleteDetails, name='delete_details')
 ]

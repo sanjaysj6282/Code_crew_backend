@@ -6,61 +6,80 @@ from .serializer import userdetailSerializer
 from .models import userDetails
 from rest_framework import status
 from rest_framework.response import Response
-# api_view is a must when using Response
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
-from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth.models import User
-from rest_framework import serializers
-from django.shortcuts import get_object_or_404
-from . import models
+from rest_framework.permissions import BasePermission, IsAuthenticated, SAFE_METHODS, IsAdminUser
 
 
-# if you want to use Authorization Code Grant, use this
 class GoogleLogin(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter
     callback_url = "http://127.0.0.1:8000/user/google"
     client_class = OAuth2Client
-
-
+      
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-# error solved
 # https://stackoverflow.com/questions/27934822/get-current-user-in-model-serializer
 def createProfile(request):
-    # curr_user = None
-    # request = self.context.get("request")
-    # if request and hasattr(request, "user"):
-    #     curr_user = request.user
     curr_user=request.user
-    
-    # data=request.data
-    # curr_user=User.objects.get(id=data['id'])
     serializer = userdetailSerializer(data=request.data, context={'request': request})
     if serializer.is_valid(raise_exception=ValueError):
         serializer.save(
             user_id=curr_user.id
-            # user=curr_user
-            # user=User.
         )
-        # serializer.create(validated_data=request.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.error_messages, status=status.HTTP_400_BAD_REQUEST)
-
-
-# def sample_view(request):
-#     current_user = request.user
-#     return HttpResponse(current_user.id) 
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def details(request):
-    # curr_user=request.user
-    # user_details = userDetails.objects.get(id=curr_user.id)
-    # curr_user=get_object_or_404(userDetails, user__user__username=username)
-    # user_details = User.objects.all().select_related('userDetails')
-    curr_user=request.user
-    user_details=userDetails.objects.get(user=curr_user)
+    try:
+        curr_user=request.user
+        user_details=userDetails.objects.get(user=curr_user)
+    except user_details.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
     serialized_data = userdetailSerializer(user_details, context={'request': request})
+    return Response(serialized_data.data)
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def updateDetails(request):
+    try:
+        curr_user=request.user
+        user_details=userDetails.objects.get(user=curr_user)
+    except user_details.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    serializer = userdetailSerializer(user_details,data=request.data, context={'request': request})
+    response_sent={}
+    if serializer.is_valid():
+        serializer.save()
+        response_sent["success"]="Updated successfully"
+        return Response(data=response_sent)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def deleteDetails(request):
+    try:
+        curr_user=request.user
+        user_details=userDetails.objects.get(user=curr_user)
+    except user_details.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    operation=user_details.delete()
+    response_sent={}
+    if operation:
+        response_sent["success"]="Deleted Sucessfully"
+    else:
+        response_sent["failure"]="Deletion failed"
+    return Response(data=response_sent)
+
+@api_view(['GET'])
+@permission_classes([IsAdminUser])
+def listDetails(request):
+    try:
+        user_details=userDetails.objects.all()
+    except user_details.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    serialized_data = userdetailSerializer(user_details, many=True, context={'request': request})
     return Response(serialized_data.data)
