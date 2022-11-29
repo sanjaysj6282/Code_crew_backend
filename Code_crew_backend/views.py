@@ -15,7 +15,12 @@ def apiOverview(request):
         'Registration               ' : 'user/signup/',
         'google_login               ' : 'user/google/',
         
-        
+        # User details 
+        "List-all users (Admin only)" : "user/list/",
+        "Add"                         : "user/add/",
+        "List"                        : "user/details/",
+        "Update"                      : "user/updateDetails/",
+        "Delete"                      :"user/deleteDetails/",
         
         'about   ' : 'about/',
         
