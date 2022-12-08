@@ -29,7 +29,7 @@ def details(request, currId):
 
 @api_view(['PUT'])
 @permission_classes([IsAdminUser])
-def updateDetails(request, currId):
+def update(request, currId):
     try:
         user_details=Workshop.objects.get(id=currId)
     except user_details.DoesNotExist:
@@ -46,7 +46,7 @@ def updateDetails(request, currId):
 @api_view(['DELETE'])
 @permission_classes([IsAdminUser])
 @parser_classes([MultiPartParser, FormParser])
-def deleteDetails(request, currId):
+def delete(request, currId):
     try:
         user_details=Workshop.objects.get(id=currId)
     except user_details.DoesNotExist:
@@ -63,7 +63,7 @@ def deleteDetails(request, currId):
 @api_view(['GET'])
 @permission_classes([IsAdminUser])
 @parser_classes([MultiPartParser, FormParser])
-def listDetails(request):
+def list(request):
     try:
         user_details=Workshop.objects.all()
     except user_details.DoesNotExist:
