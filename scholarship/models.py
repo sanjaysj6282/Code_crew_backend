@@ -27,9 +27,12 @@ class Scholarship(models.Model):
     details       = models.TextField()
     link          = models.CharField(max_length=100)
     income_elig   = models.IntegerField()
-    program_elig  = models.CharField(choices=Programme_choices)
-    category_elig = models.CharField(choices=Category_choices)
-    gender_elig   = models.CharField(choices=Gender_choices)
+    # program_elig  = models.CharField(max_length=12, choices=Programme_choices.choices)
+    # category_elig = models.CharField(max_length=3, choices=Category_choices.choices)
+    # gender_elig   = models.CharField(max_length=3, choices=Gender_choices.choices)
+    program_elig  = MultiSelectField(max_length=12, choices=Programme_choices.choices)
+    category_elig = MultiSelectField(max_length=3, choices=Category_choices.choices)
+    gender_elig   = MultiSelectField(max_length=3, choices=Gender_choices.choices)
     
     def __str__(self):
         return self.name
