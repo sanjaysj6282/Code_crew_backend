@@ -9,7 +9,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 @api_view(['POST'])
 @permission_classes([IsAdminUser])
 @parser_classes([MultiPartParser, FormParser])
-def createProfile(request):
+def create(request):
     serializer = workshopSerializer(data=request.data, context={'request': request})
     if serializer.is_valid(raise_exception=ValueError):
         serializer.save()

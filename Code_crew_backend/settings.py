@@ -58,9 +58,12 @@ INSTALLED_APPS = [
     'dj_rest_auth.registration',
     'allauth.socialaccount.providers.google',
     
+    'multiselectfield',
+    
     # users
     'users',
     'events',
+    'scholarship',
 ]
 
 CORS_ORIGIN_WHITELIST = (
