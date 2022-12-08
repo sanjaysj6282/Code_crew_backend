@@ -8,6 +8,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     
     path('user/', include('users.urls'), name='users'),
+    path('events/', include('events.urls'), name='events'),
     
     path('list-urls/', views.apiOverview)
 ]
