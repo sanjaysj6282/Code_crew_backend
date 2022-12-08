@@ -5,3 +5,8 @@ class workshopSerializer(serializers.ModelSerializer):
     class Meta:
         model = Workshop
         fields='__all__'
+        
+class lectureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Lecture
+        fields='__all__'
