@@ -10,7 +10,7 @@ class Workshop(models.Model):
     link        = models.CharField(max_length=100)
     price       = models.IntegerField()
     points      = models.IntegerField()
-    certificate = models.ImageField(upload_to='workshop/certificate', blank=True)
+    certificate = models.FileField(upload_to='workshop/certificate', blank=True)
  
     def __str__(self):
         return self.name
@@ -25,7 +25,7 @@ class Lecture(models.Model):
     link        = models.CharField(max_length=100)
     price       = models.IntegerField()
     points      = models.IntegerField()
-    certificate = models.ImageField(upload_to='lecture/certificate', blank=True)
+    certificate = models.FileField(upload_to='lecture/certificate', blank=True)
     speaker     = models.CharField(max_length=50)
     
     def __str__(self):
@@ -41,7 +41,7 @@ class Exam(models.Model):
     link        = models.CharField(max_length=100)
     price       = models.IntegerField()
     points      = models.IntegerField()
-    certificate = models.ImageField(upload_to='exam/certificate', blank=True)
+    certificate = models.FileField(upload_to='exam/certificate', blank=True)
     eligibility = models.CharField(max_length=50)   
     
     def __str__(self):
