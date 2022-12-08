@@ -26,13 +26,13 @@ class Scholarship(models.Model):
     logo                 = models.ImageField(upload_to='workshop/logo', blank=True)
     details              = models.TextField()
     link                 = models.CharField(max_length=100)
-    income_elig          = models.IntegerField()
+    income_eligibility   = models.IntegerField()
     # program_elig  = models.CharField(max_length=12, choices=Programme_choices.choices)
     # category_elig = models.CharField(max_length=3, choices=Category_choices.choices)
     # gender_elig   = models.CharField(max_length=3, choices=Gender_choices.choices)
     program_eligibility  = MultiSelectField(max_length=100, choices=Programme_choices.choices)
     category_eligibility = MultiSelectField(max_length=100, choices=Category_choices.choices)
-    gendereligibility    = MultiSelectField(max_length=100, choices=Gender_choices.choices)
+    gender_eligibility   = MultiSelectField(max_length=100, choices=Gender_choices.choices)
     
     def __str__(self):
         return self.name
