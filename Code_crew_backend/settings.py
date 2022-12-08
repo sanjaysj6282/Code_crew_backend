@@ -192,3 +192,7 @@ REST_USE_JWT = True
 JWT_AUTH_COOKIE = 'my-app-auth'
 
 ACCOUNT_EMAIL_VERIFICATION="none"
+
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'users.serializer.CustomRegisterSerializer'
+}
