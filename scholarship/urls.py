@@ -1,12 +1,12 @@
 from django.urls import path, include
-# from ..events import views_lecture
+from . import views
 
 app_name = 'scholarship'
 
 urlpatterns = [  
-    # path('lecture/list/', views_lecture.listDetails,name='list events'),
-    # path('lecture/add/', views_lecture.create, name='create_profile'),
-    # path('lecture/details/<currId>', views_lecture.details, name='user_details'),
-    # path('lecture/update/<currId>', views_lecture.updateDetails, name='update_details'),
-    # path('lecture/delete/<currId>', views_lecture.deleteDetails, name='delete_details')
+    path('list/', views.listDetails,name='list events'),
+    path('add/', views.create, name='create_profile'),
+    path('details/<currId>', views.details, name='user_details'),
+    path('update/<currId>', views.updateDetails, name='update_details'),
+    path('delete/<currId>', views.deleteDetails, name='delete_details')
 ]
