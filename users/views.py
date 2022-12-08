@@ -8,7 +8,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes, parser_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
-from rest_framework.parsers import MultiPartParser
+from rest_framework.parsers import MultiPartParser, FormParser
 
 class GoogleLogin(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter
@@ -18,7 +18,7 @@ class GoogleLogin(SocialLoginView):
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-@parser_classes([MultiPartParser])
+@parser_classes([MultiPartParser, FormParser])
 # https://stackoverflow.com/questions/27934822/get-current-user-in-model-serializer
 def createProfile(request):
     curr_user=request.user
@@ -32,6 +32,7 @@ def createProfile(request):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
+@parser_classes([MultiPartParser, FormParser])
 def details(request):
     try:
         curr_user=request.user
@@ -43,6 +44,7 @@ def details(request):
 
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
+@parser_classes([MultiPartParser, FormParser])
 def updateDetails(request):
     try:
         curr_user=request.user
@@ -60,6 +62,7 @@ def updateDetails(request):
 
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
+@parser_classes([MultiPartParser, FormParser])
 def deleteDetails(request):
     try:
         curr_user=request.user
@@ -77,6 +80,7 @@ def deleteDetails(request):
 
 @api_view(['GET'])
 @permission_classes([IsAdminUser])
+@parser_classes([MultiPartParser, FormParser])
 def listDetails(request):
     try:
         user_details=userDetails.objects.all()

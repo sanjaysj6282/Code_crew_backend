@@ -2,12 +2,13 @@ from .models import Lecture
 from .serializer import lectureSerializer
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, parser_classes
 from rest_framework.permissions import IsAdminUser
-
+from rest_framework.parsers import MultiPartParser, FormParser
 
 @api_view(['POST'])
 @permission_classes([IsAdminUser])
+@parser_classes([MultiPartParser, FormParser])
 def createProfile(request):
     serializer = lectureSerializer(data=request.data, context={'request': request})
     if serializer.is_valid(raise_exception=ValueError):
@@ -17,6 +18,7 @@ def createProfile(request):
 
 @api_view(['GET'])
 @permission_classes([IsAdminUser])
+@parser_classes([MultiPartParser, FormParser])
 def details(request, currId):
     try:
         user_details=Lecture.objects.get(id=currId)
@@ -27,6 +29,7 @@ def details(request, currId):
 
 @api_view(['PUT'])
 @permission_classes([IsAdminUser])
+@parser_classes([MultiPartParser, FormParser])
 def updateDetails(request, currId):
     try:
         user_details=Lecture.objects.get(id=currId)
@@ -43,6 +46,7 @@ def updateDetails(request, currId):
 
 @api_view(['DELETE'])
 @permission_classes([IsAdminUser])
+@parser_classes([MultiPartParser, FormParser])
 def deleteDetails(request, currId):
     try:
         user_details=Lecture.objects.get(id=currId)
@@ -59,6 +63,7 @@ def deleteDetails(request, currId):
 
 @api_view(['GET'])
 @permission_classes([IsAdminUser])
+@parser_classes([MultiPartParser, FormParser])
 def listDetails(request):
     try:
         user_details=Lecture.objects.all()
