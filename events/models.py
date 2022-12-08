@@ -1,5 +1,7 @@
 from django.db import models
 
+# add URL validators --> for link
+# https://stackoverflow.com/questions/45994290/how-to-make-a-model-field-as-hyperlink-in-django-models
 class Workshop(models.Model):
     name        = models.CharField(max_length=50)
     date        = models.DateField()
@@ -29,7 +31,7 @@ class Lecture(models.Model):
     speaker     = models.CharField(max_length=50)
     
     def __str__(self):
-        return self.name
+        return self.nam
         
 class Exam(models.Model):
     name        = models.CharField(max_length=50)
