@@ -1,13 +1,14 @@
-from .models import Exam, Lecture, Workshop
+from .models import Workshop
 from .serializer import workshopSerializer
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, parser_classes
 from rest_framework.permissions import IsAdminUser
-
+from rest_framework.parsers import MultiPartParser
 
 @api_view(['POST'])
 @permission_classes([IsAdminUser])
+@parser_classes([MultiPartParser])
 def createProfile(request):
     serializer = workshopSerializer(data=request.data, context={'request': request})
     if serializer.is_valid(raise_exception=ValueError):
