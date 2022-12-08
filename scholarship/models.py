@@ -30,9 +30,9 @@ class Scholarship(models.Model):
     # program_elig  = models.CharField(max_length=12, choices=Programme_choices.choices)
     # category_elig = models.CharField(max_length=3, choices=Category_choices.choices)
     # gender_elig   = models.CharField(max_length=3, choices=Gender_choices.choices)
-    program_elig  = MultiSelectField(max_length=12, choices=Programme_choices.choices)
-    category_elig = MultiSelectField(max_length=3, choices=Category_choices.choices)
-    gender_elig   = MultiSelectField(max_length=3, choices=Gender_choices.choices)
+    program_elig  = MultiSelectField(max_length=100, choices=Programme_choices.choices)
+    category_elig = MultiSelectField(max_length=100, choices=Category_choices.choices)
+    gender_elig   = MultiSelectField(max_length=100, choices=Gender_choices.choices)
     
     def __str__(self):
         return self.name
